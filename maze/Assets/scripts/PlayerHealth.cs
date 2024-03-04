@@ -40,7 +40,6 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator Waiter()
     {
         yield return new WaitForSecondsRealtime(6);
-        // Debug.Log("asdasdasdsa");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         yield return null;
     }
