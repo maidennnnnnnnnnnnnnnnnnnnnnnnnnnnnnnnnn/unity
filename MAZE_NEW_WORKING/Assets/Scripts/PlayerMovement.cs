@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject winScreen;
+    public GameObject exit;
     public float moveSpeed;
 
     public Transform orientation;
@@ -44,5 +46,19 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Exit"))
+        {
+            winScreen.SetActive(true);
+            StartCoroutine("Waiter");
+        }
+    }
+    IEnumerator Waiter()
+    {
+        yield return new WaitForSecondsRealtime(4);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        yield return null;
     }
 }
